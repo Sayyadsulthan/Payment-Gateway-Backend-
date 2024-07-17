@@ -2,6 +2,7 @@ import express from 'express';
 import {
     createTransaction,
     getTransactionStatus,
+    processTransaction,
     refundTransaction,
 } from '../../controllers/transactionController';
 
