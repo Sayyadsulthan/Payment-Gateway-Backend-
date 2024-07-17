@@ -1,0 +1,51 @@
+# Node.js dependencies
+node_modules
+npm-debug.log
+
+# Logs
+logs
+*.log
+
+# Local development environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Yarn v1
+.yarn-cache/
+
+# Yarn v2
+.pnp.*
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-workspace
+
+# MacOS files
+.DS_Store
+
+# Docker files
+.dockerignore
+Dockerfile
+
+# Tests
+coverage/
+*.spec.js
+*.test.js
+
+# Build artifacts and other things to ignore
+dist/
+build/
+tmp/
