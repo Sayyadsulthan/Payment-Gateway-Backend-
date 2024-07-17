@@ -34,7 +34,7 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ message: 'Fill the valid credentials!!' });
         }
 
-        const user = User.findOne({ email }).select('username email role');
+        const user = User.findOne({ email }).select('username email role password');
         if (!user) {
             return res.status(409).json({ message: 'User not found!!' });
         }
@@ -43,7 +43,11 @@ const loginUser = async (req, res) => {
         if (!isValidPassword) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        const token = jwt.sign(user, env.JWT_SECRET, { algorithm: 'RS256', expiresIn: '2d' });
+        const token = jwt.sign(
+            { username: user.name, email: user.email, role: user.role },
+            env.JWT_SECRET,
+            { algorithm: 'RS256', expiresIn: '2d' }
+        );
 
         res.status(200).json({ token });
     } catch (error) {
