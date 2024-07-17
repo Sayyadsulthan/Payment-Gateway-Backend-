@@ -16,4 +16,8 @@ app.get('/*', (req, res, next) => {
     res.status(400).json({ message: 'Invalid API URL' });
 });
 
+app.use((err, req, res, next) => {
+    res.status(500).json({ error: 'Internal Server Error' });
+});
+
 app.listen(port, (err) => console.log(err ? err.message : 'server is running on port: ' + port));

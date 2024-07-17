@@ -43,4 +43,11 @@ const refundTransaction = async (transactionId) => {
     return transaction;
 };
 
-export { createTransaction, getTransactionStatus, processTransaction, refundTransaction };
+const transactionHelper = {
+    createTransaction,
+    getTransactionStatus,
+    processTransaction,
+    refundTransaction,
+};
+
+export default transactionHelper;
