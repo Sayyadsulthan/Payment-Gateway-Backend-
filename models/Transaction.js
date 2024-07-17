@@ -22,7 +22,7 @@ transactionSchema.methods.refund = async function () {
     }
 
     // Logic to interact with external payment provider for refund
-
+    // TODO
     this.status = 'refunded';
     this.updatedAt = new Date();
     await this.save();
