@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
-
+import env from '../config/environment.js';
 const registerUser = async (req, res) => {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;
     try {
         // checking the required data is given from client
         if (!username || !email || !password) {
@@ -11,15 +11,15 @@ const registerUser = async (req, res) => {
         }
 
         // check if the user already exist
-        const isUserExist = User.findOne({ email });
+        const isUserExist = await User.findOne({ email });
         if (isUserExist) {
             return res.status(409).json({ message: 'User already exist!!' });
         }
 
         // else create new user
-        await bcrypt.compare(password, hash);
+        const hashPass = await bcrypt.hash(password, Number(env.SALT_ROUND));
+        req.body.password = hashPass;
         const user = await User.create(req.body);
-        JsonWebTokenError;
         res.status(201).json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -34,7 +34,7 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ message: 'Fill the valid credentials!!' });
         }
 
-        const user = User.findOne({ email }).select('username email role password');
+        const user = await User.findOne({ email }).select('username email role password');
         if (!user) {
             return res.status(409).json({ message: 'User not found!!' });
         }
@@ -46,7 +46,7 @@ const loginUser = async (req, res) => {
         const token = jwt.sign(
             { username: user.name, email: user.email, role: user.role },
             env.JWT_SECRET,
-            { algorithm: 'RS256', expiresIn: '2d' }
+            { algorithm: env.JWT_ALGORITHM, expiresIn: '2d' }
         );
 
         res.status(200).json({ token });

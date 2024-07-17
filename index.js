@@ -1,9 +1,14 @@
 import express from 'express';
-import { configDotenv } from 'dotenv';
 import db from './config/mongoose.js';
-configDotenv();
+import apiRoutes from './routes/api/index.js';
+import bodyParser from 'body-parser';
+import env from './config/environment.js';
 const app = express();
-const port = process.env.PORT || 8080;
+const port = env.PORT || 8080;
+
+app.use(bodyParser.json());
+
+app.use('/api', apiRoutes);
 
 app.get('/', (req, res) => res.status(200).json('Welcome to Payment Gate way'));
 
