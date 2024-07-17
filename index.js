@@ -5,13 +5,19 @@ import bodyParser from 'body-parser';
 import env from './config/environment.js';
 import morgan from 'morgan';
 import { createStream } from 'rotating-file-stream';
+import setupSwagger from './swagger.js';
+
 const app = express();
-const port = env.PORT || 8080;
+const port = env.PORT || 8000;
 
 // Middleware setup
 app.use(bodyParser.json());
 
 app.use(express.json());
+
+// swagger setup for documentation
+// Setup Swagger
+setupSwagger(app);
 // for logger check and store the logs in lohs folder
 app.use(
     morgan('combined', {
