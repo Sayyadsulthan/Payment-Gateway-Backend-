@@ -11,9 +11,10 @@ const createTransaction = async (req, res) => {
 };
 
 const processTransaction = async (req, res) => {
-    const { transactionId } = req.params;
+    // adding the transactionID to body for the safty purpose
+    const { transactionId, paymentId } = req.body;
     try {
-        const transaction = await TransactionHelper.processTransaction(transactionId);
+        const transaction = await TransactionHelper.processTransaction(transactionId, paymentId);
         res.status(200).json(transaction);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -31,9 +32,9 @@ const getTransactionStatus = async (req, res) => {
 };
 
 const refundTransaction = async (req, res) => {
-    const { transactionId } = req.params;
+    const { transactionId, amount } = req.body;
     try {
-        const transaction = await TransactionHelper.refundTransaction(transactionId);
+        const transaction = await TransactionHelper.refundTransaction(transactionId, amount);
         res.status(200).json(transaction);
     } catch (error) {
         res.status(500).json({ error: error.message });

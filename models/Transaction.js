@@ -16,17 +16,4 @@ const transactionSchema = new Schema({
     updatedAt: { type: Date, default: Date.now },
 });
 
-transactionSchema.methods.refund = async function () {
-    if (this.status !== 'processed') {
-        throw new Error('Cannot refund transaction that is not processed.');
-    }
-
-    // Logic to interact with external payment provider for refund
-    // TODO
-    this.status = 'refunded';
-    this.updatedAt = new Date();
-    await this.save();
-    return this;
-};
-
 export default mongoose.model('Transaction', transactionSchema);

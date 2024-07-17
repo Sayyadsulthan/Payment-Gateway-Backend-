@@ -8,9 +8,10 @@ import {
 import auth from '../../middlewares/auth.js';
 
 const router = express.Router();
-// TODO Authentication
+// Authentication for all transactions
+// logged user can do
 router.post('/', auth, createTransaction);
-router.post('/:transactionId/process', auth, processTransaction);
+router.post('/process', auth, processTransaction);
 router.get('/:transactionId', auth, getTransactionStatus);
 router.post('/:transactionId/refund', auth, refundTransaction);
 
